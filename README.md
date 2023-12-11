@@ -38,6 +38,45 @@ Instala las dependencias necesarias ejecutando el siguiente comando:
 pip install -r requirements.txt
 ```
 
+## Implementación del Cifrado
+### Generación de Clave Privada RSA
+Para generar una nueva clave privada RSA cifrada con AES-256, ejecuta el siguiente comando:
+
+```bash
+openssl genpkey -algorithm RSA -out server-key.key -aes256
+```
+
+Este comando generará una clave privada cifrada y la guardará en un archivo llamado __`server-key.key`__. Asegúrate de recordar la contraseña que establezcas.
+
+
+### Creación de Solicitud de Firma de Certificado (CSR)
+Crea una nueva Solicitud de Firma de Certificado (CSR) utilizando la clave privada RSA generada:
+
+```bash
+openssl req -new -key server-key.key -out server.csr
+```
+
+La CSR se guardará en un archivo llamado __`server.csr`__.
+
+### Generación de Certificado Autofirmado
+Genera un certificado autofirmado basado en la CSR:
+
+```bash
+openssl x509 -req -days 365 -in server.csr -signkey server-key.key -out server-cert.pem
+```
+
+Este comando generará un certificado válido por un año y lo guardará en un archivo llamado __`server-cert.pem`__.
+
+
+### Eliminación de Contraseña de la Clave Privada (Opcional pero precaucionado)
+Si decides eliminar la contraseña de la clave privada para simplificar la automatización, ejecuta el siguiente comando:
+
+```bash
+openssl rsa -in server-key.key -out server-key.key
+```
+Este paso es opcional y se realiza para facilitar la automatización en entornos donde ingresar una contraseña manualmente no es práctico. Sin embargo, ten en cuenta que al eliminar la contraseña, la clave privada se vuelve más vulnerable al acceso no autorizado. Asegúrate de entender las implicaciones antes de realizar este paso.
+
+
 
 
 ## Ejecución
@@ -57,7 +96,7 @@ El servidor estará escuchando en el puerto especificado (por defecto, el puerto
 Ejecuta el cliente utilizando el siguiente comando:
 
 ```bash
-python client.py
+python3 client.py
 ```
 
 Se abrirá una ventana de chat donde puedes ingresar tu nombre y conectarte al servidor.
