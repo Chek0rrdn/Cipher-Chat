@@ -1,6 +1,7 @@
 #!usr/bin/env python 3
 
 import socket
+import ssl
 import threading
 
 
@@ -45,6 +46,7 @@ def server_program():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) #TIME WAIT
     server_socket.bind((host, port))
+    server_socket = ssl.wrap_socket(server_socket, keyfile='server-key.key', certfile='server-cert.pem', server_side=True)
     server_socket.listen()
     
     print(f"\n[!] The server is listening for local connections")

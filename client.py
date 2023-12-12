@@ -1,6 +1,7 @@
 #!usr/bin/env python 3
 
 import socket
+import ssl
 import threading
 
 from tkinter import *
@@ -51,6 +52,7 @@ def client_program():
     port = 12345
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket = ssl.wrap_socket(client_socket)
     client_socket.connect((host, port))
 
     username = input(f"Enter your user: ")
