@@ -68,7 +68,7 @@ openssl x509 -req -days 365 -in server.csr -signkey server-key.key -out server-c
 Este comando generará un certificado válido por un año y lo guardará en un archivo llamado __`server-cert.pem`__.
 
 
-### Eliminación de Contraseña de la Clave Privada (Opcional pero precaucionado)
+### Eliminación de Contraseña de la Clave Privada (Opcional pero con precaución)
 Si decides eliminar la contraseña de la clave privada para simplificar la automatización, ejecuta el siguiente comando:
 
 ```bash
